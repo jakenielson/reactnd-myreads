@@ -166,7 +166,7 @@ class BooksApp extends React.Component {
                               </select>
                             </div>
                           </div>
-                          <div className="book-title">Oh, the Places You'll Go!</div>
+                          <div className="book-title">Oh, the Places You&apos;ll Go!</div>
                           <div className="book-authors">Seuss</div>
                         </div>
                       </li>
