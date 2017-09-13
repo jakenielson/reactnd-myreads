@@ -1,14 +1,6 @@
 import React, { Component } from 'react'
 
 class Book extends Component {
-  state = {
-    shelf: ''
-  }
-
-  updateShelf = (shelf) => {
-    this.setState({shelf: shelf})
-  }
-
   render() {
     const {title, author, cover} = this.props
 
