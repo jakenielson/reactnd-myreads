@@ -2,14 +2,6 @@ import React, { Component } from 'react'
 import Book from './Book'
 
 class BookShelf extends Component {
-  addBook = (book) => {
-    this.setState({books: this.state.books.concat([book])})
-  }
-
-  removeBook = (book) => {
-    this.setState({books: this.state.books.filter((b) => b !== book)})
-  }
-
   render() {
     const {title, books} = this.props
 
