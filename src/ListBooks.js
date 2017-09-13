@@ -62,13 +62,20 @@ class ListBooks extends Component {
   moveBook = (book, currentShelf, newShelf) => {
     let {bookshelves} = this.state
 
-    // Log the book
-    console.log(book)
+    const bookData = {
+      title: book.props.title,
+      author: book.props.author,
+      cover: book.props.cover
+    }
+
+    console.log("Moving " + bookData.title + " from " + currentShelf + " to " + newShelf)
 
     // Remove the book from currentShelf
     bookshelves = bookshelves.map((shelf) => {
       if (shelf.title === currentShelf) {
-        shelf.books = shelf.books.filter((b) => b !== book)
+        shelf.books = shelf.books.filter((b) => {
+          return b.title !== bookData.title
+        })
       }
       return shelf;
     })
@@ -76,7 +83,7 @@ class ListBooks extends Component {
     // Add the book to newShelf
     bookshelves = bookshelves.map((shelf) => {
       if (shelf.title === newShelf) {
-        shelf.books = shelf.books.concat([book])
+        shelf.books = shelf.books.concat([bookData])
       }
       return shelf;
     })
@@ -87,6 +94,7 @@ class ListBooks extends Component {
 
   render() {
     const {bookshelves} = this.state
+    const moveBook = this.moveBook
 
     return (
       <div className="list-books">
@@ -96,7 +104,7 @@ class ListBooks extends Component {
         <div className="list-books-content">
           <div>
             {bookshelves.map((shelf) => (
-              <BookShelf title={shelf.title} books={shelf.books}/>
+              <BookShelf key={shelf.title} title={shelf.title} books={shelf.books} moveBook={moveBook}/>
             ))}
           </div>
         </div>

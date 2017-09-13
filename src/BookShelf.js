@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import Book from './Book'
 
 class BookShelf extends Component {
+  getBook = (book, newShelf) => {
+    this.props.moveBook(book, this.props.title, newShelf)
+  }
+
   render() {
     const {title, books} = this.props
 
@@ -11,8 +15,8 @@ class BookShelf extends Component {
         <div className="bookshelf-books">
           <ol className="books-grid">
             {books.map((book) => (
-              <li>
-                <Book title={book.title} author={book.author} cover={book.cover}/>
+              <li key={book.title}>
+                <Book title={book.title} author={book.author} cover={book.cover} shelf={title} getBook={this.getBook}/>
               </li>
             ))}
           </ol>
