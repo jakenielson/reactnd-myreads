@@ -68,15 +68,17 @@ class ListBooks extends Component {
     // Remove the book from currentShelf
     bookshelves = bookshelves.map((shelf) => {
       if (shelf.title === currentShelf) {
-        return shelf.books.filter((b) => b !== book)
+        shelf.books = shelf.books.filter((b) => b !== book)
       }
+      return shelf;
     })
 
     // Add the book to newShelf
     bookshelves = bookshelves.map((shelf) => {
       if (shelf.title === newShelf) {
-        return shelf.books.concat([book])
+        shelf.books = shelf.books.concat([book])
       }
+      return shelf;
     })
 
     // Set the state
