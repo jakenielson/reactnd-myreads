@@ -26,19 +26,15 @@ class BooksApp extends React.Component {
   moveBook = (book, currentShelf, newShelf) => {
     let {bookshelves} = this.state
 
-    const bookData = {
-      title: book.props.title,
-      author: book.props.author,
-      cover: book.props.cover
-    }
+    book = book.props.book
 
-    console.log("Moving " + bookData.title + " from " + currentShelf + " to " + newShelf)
+    console.log("Moving " + book.title + " from " + currentShelf + " to " + newShelf)
 
     // Remove the book from currentShelf
     bookshelves = bookshelves.map((shelf) => {
       if (shelf.title === currentShelf) {
         shelf.books = shelf.books.filter((b) => {
-          return b.title !== bookData.title
+          return b.title !== book.title
         })
       }
       return shelf;
@@ -47,7 +43,7 @@ class BooksApp extends React.Component {
     // Add the book to newShelf
     bookshelves = bookshelves.map((shelf) => {
       if (shelf.title === newShelf) {
-        shelf.books = shelf.books.concat([bookData])
+        shelf.books = shelf.books.concat([book])
       }
       return shelf;
     })
@@ -63,21 +59,15 @@ class BooksApp extends React.Component {
       let {bookshelves} = this.state
 
       for(let i = 0; i < result.length; i++) {
-        const bookData = {
-          title: result[i].title,
-          author: result[i].authors[0],
-          cover: 'url(' + result[i].imageLinks.thumbnail + ')'
-        }
-
         switch (result[i].shelf) {
           case 'currentlyReading':
-            bookshelves[0].books = bookshelves[0].books.concat([bookData])
+            bookshelves[0].books = bookshelves[0].books.concat([result[i]])
             break;
           case 'wantToRead':
-            bookshelves[1].books = bookshelves[1].books.concat([bookData])
+            bookshelves[1].books = bookshelves[1].books.concat([result[i]])
             break;
           case 'read':
-            bookshelves[2].books = bookshelves[2].books.concat([bookData])
+            bookshelves[2].books = bookshelves[2].books.concat([result[i]])
             break;
           default:
             break;
