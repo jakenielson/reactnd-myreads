@@ -48,6 +48,21 @@ class BooksApp extends React.Component {
       return shelf;
     })
 
+    // Update the server
+    switch (newShelf) {
+      case 'Currently Reading':
+        BooksAPI.update(book, 'currentlyReading')
+        break;
+      case 'Want to Read':
+        BooksAPI.update(book, 'wantToRead')
+        break;
+      case 'Read':
+        BooksAPI.update(book, 'read')
+        break;
+      default:
+        break;
+    }
+
     // Set the state
     this.setState({bookshelves: bookshelves})
   }
