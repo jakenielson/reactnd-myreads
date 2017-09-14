@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import BookShelf from './BookShelf'
-import Book from './Book'
+import * as BooksAPI from './BooksAPI'
 
 class ListBooks extends Component {
   state = {
@@ -90,6 +90,12 @@ class ListBooks extends Component {
 
     // Set the state
     this.setState({bookshelves: bookshelves})
+  }
+
+  componentDidMount = () => {
+    BooksAPI.getAll().then((result) => {
+      console.log(result)
+    })
   }
 
   render() {
