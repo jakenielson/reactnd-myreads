@@ -69,8 +69,6 @@ class BooksApp extends React.Component {
 
   componentDidMount = () => {
     BooksAPI.getAll().then((result) => {
-      console.log(result)
-
       let {bookshelves} = this.state
 
       for(let i = 0; i < result.length; i++) {
@@ -100,7 +98,7 @@ class BooksApp extends React.Component {
       <BrowserRouter>
         <div className="app">
           <Route path="/search" render={() => (
-            <SearchBooks/>
+            <SearchBooks moveBook={this.moveBook}/>
           )}/>
           <Route exact path="/" render={() => (
             <ListBooks moveBook={this.moveBook} bookshelves={bookshelves}/>

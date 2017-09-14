@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 class ShelfChanger extends Component {
   handleChange = (event) => {
-    console.log(event.target.value)
     this.props.getNewShelf(event.target.value)
   }
 
@@ -16,7 +15,7 @@ class ShelfChanger extends Component {
           <option value="Currently Reading">Currently Reading</option>
           <option value="Want to Read">Want to Read</option>
           <option value="Read">Read</option>
-          <option value="none">None</option>
+          <option value="None">None</option>
         </select>
       </div>
     )
