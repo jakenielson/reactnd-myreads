@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 class SearchBooks extends Component {
+  state = {}
+  
   render() {
     return (
       <div className="search-books">
