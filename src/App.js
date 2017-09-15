@@ -29,8 +29,6 @@ class BooksApp extends Component {
   moveBook = (book, newShelf) => {
     let {bookshelves} = this.state
 
-    console.log("Moving " + book.title + " from " + book.shelf + " to " + newShelf)
-
     // Remove the book from the current shelf
     bookshelves = bookshelves.map((shelf) => {
       if (shelf.title === book.shelf) {
@@ -63,7 +61,7 @@ class BooksApp extends Component {
       let {bookshelves} = this.state
 
       for(let i = 0; i < result.length; i++) {
-        BooksAPI.update(result[i], result[i].shelf).then((r) => {console.log(r)})
+        BooksAPI.update(result[i], result[i].shelf)
         switch (result[i].shelf) {
           case 'currentlyReading':
             bookshelves[0].books = bookshelves[0].books.concat([result[i]])
