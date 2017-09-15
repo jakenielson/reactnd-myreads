@@ -14,18 +14,23 @@ class SearchBooks extends Component {
     this.setState({query: event.target.value})
 
     // Search the Books API
-    BooksAPI.search(event.target.value, 20).then((results) => {
-      // Make sure there's a result
-      if (results) {
-        // Make sure the result didn't return an error
-        if (results.error) {
-          console.log('Error: ' + results.error)
+    if (event.target.value) {
+      BooksAPI.search(event.target.value, 20).then((results) => {
+        // Make sure there's a result
+        if (results) {
+          // Make sure the result didn't return an error
+          if (results.error) {
+            console.log('Error: ' + results.error)
+          }
+          else {
+            this.getShelves(results)
+          }
         }
-        else {
-          this.getShelves(results)
-        }
-      }
-    })
+      })
+    }
+    else {
+      this.setState({searchResults: []})
+    }
   }
 
   // BooksAPI.search results don't have shelves
