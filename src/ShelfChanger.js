@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 
 class ShelfChanger extends Component {
   handleChange = (event) => {
-    this.props.getNewShelf(event.target.value)
+    console.log(this.props)
+    this.props.moveBook(this.props.book, event.target.value)
   }
 
   render() {
@@ -12,10 +13,10 @@ class ShelfChanger extends Component {
       <div className="book-shelf-changer">
         <select value={shelf} onChange={this.handleChange}>
           <option value="none" disabled>Move to...</option>
-          <option value="Currently Reading">Currently Reading</option>
-          <option value="Want to Read">Want to Read</option>
-          <option value="Read">Read</option>
-          <option value="None">None</option>
+          <option value="currentlyReading">Currently Reading</option>
+          <option value="wantToRead">Want to Read</option>
+          <option value="read">Read</option>
+          <option value="none">None</option>
         </select>
       </div>
     )

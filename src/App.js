@@ -1,93 +1,84 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 import ListBooks from './ListBooks'
 import SearchBooks from './SearchBooks'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 
-class BooksApp extends React.Component {
+class BooksApp extends Component {
   state = {
     bookshelves: [
       {
-        title: 'Currently Reading',
+        title: 'currentlyReading',
         books: []
       },
       {
-        title: 'Want to Read',
+        title: 'wantToRead',
         books: []
       },
       {
-        title: 'Read',
+        title: 'read',
         books: []
       }
     ]
   }
 
-  moveBook = (book, currentShelf, newShelf) => {
+  // Adds a book to a shelf
+  // Takes a book object and a target shelf
+  // If the book was previously on a different shelf, remove it from that shelf
+  moveBook = (book, newShelf) => {
     let {bookshelves} = this.state
 
-    book = book.props.book
+    console.log("Moving " + book.title + " from " + book.shelf + " to " + newShelf)
 
-    console.log("Moving " + book.title + " from " + currentShelf + " to " + newShelf)
-
-    // Remove the book from currentShelf
+    // Remove the book from the current shelf
     bookshelves = bookshelves.map((shelf) => {
-      if (shelf.title === currentShelf) {
-        shelf.books = shelf.books.filter((b) => {
-          return b.title !== book.title
-        })
+      if (shelf.title === book.shelf) {
+        shelf.books = shelf.books.filter((b) => {return b.id !== book.id})
       }
-      return shelf;
+      return shelf
     })
 
-    // Add the book to newShelf
+    // Change the shelf property of the book
+    book.shelf = newShelf
+
+    // Add the book to the new shelf
     bookshelves = bookshelves.map((shelf) => {
       if (shelf.title === newShelf) {
         shelf.books = shelf.books.concat([book])
       }
-      return shelf;
+      return shelf
     })
 
     // Update the server
-    switch (newShelf) {
-      case 'Currently Reading':
-        BooksAPI.update(book, 'currentlyReading')
-        break;
-      case 'Want to Read':
-        BooksAPI.update(book, 'wantToRead')
-        break;
-      case 'Read':
-        BooksAPI.update(book, 'read')
-        break;
-      default:
-        break;
-    }
+    BooksAPI.update(book, book.shelf)
 
     // Set the state
     this.setState({bookshelves: bookshelves})
   }
 
+  // Gets initial book data
   componentDidMount = () => {
     BooksAPI.getAll().then((result) => {
       let {bookshelves} = this.state
 
       for(let i = 0; i < result.length; i++) {
+        BooksAPI.update(result[i], result[i].shelf).then((r) => {console.log(r)})
         switch (result[i].shelf) {
           case 'currentlyReading':
             bookshelves[0].books = bookshelves[0].books.concat([result[i]])
-            break;
+            break
           case 'wantToRead':
             bookshelves[1].books = bookshelves[1].books.concat([result[i]])
-            break;
+            break
           case 'read':
             bookshelves[2].books = bookshelves[2].books.concat([result[i]])
-            break;
+            break
           default:
-            break;
+            break
         }
-
-        this.setState({bookshelves: bookshelves})
       }
+      this.setState({bookshelves: bookshelves})
     })
   }
 
@@ -98,10 +89,10 @@ class BooksApp extends React.Component {
       <BrowserRouter>
         <div className="app">
           <Route path="/search" render={() => (
-            <SearchBooks moveBook={this.moveBook}/>
+            <SearchBooks bookshelves={bookshelves} moveBook={this.moveBook}/>
           )}/>
           <Route exact path="/" render={() => (
-            <ListBooks moveBook={this.moveBook} bookshelves={bookshelves}/>
+            <ListBooks bookshelves={bookshelves} moveBook={this.moveBook}/>
           )}/>
         </div>
       </BrowserRouter>
