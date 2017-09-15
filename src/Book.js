@@ -9,10 +9,12 @@ class Book extends Component {
     if (book.title) {title = book.title}
     if (book.authors) {author = book.authors[0]}
 
+    let cover = book.imageLinks ? book.imageLinks.thumbnail : 'http://via.placeholder.com/128x193?text=No%20Cover'
+
     return (
       <div className="book">
         <div className="book-top">
-          <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url(' + book.imageLinks.thumbnail + ')'}}></div>
+          <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url(' + cover + ')'}}></div>
           <ShelfChanger shelf={shelf} book={book} moveBook={moveBook}/>
         </div>
         <div className="book-title">{title}</div>
