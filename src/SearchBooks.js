@@ -11,10 +11,10 @@ class SearchBooks extends Component {
 
   // Lists the results of the current query
   handleChange = (event) => {
-    this.setState({query: event.target.value.trim()})
+    this.setState({query: event.target.value})
 
     // Search the Books API
-    BooksAPI.search(event.target.value.trim(), 20).then((results) => {
+    BooksAPI.search(event.target.value, 20).then((results) => {
       // Make sure there's a result
       if (results) {
         // Make sure the result didn't return an error
